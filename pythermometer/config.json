@@ -7,9 +7,12 @@
         "read_interval_seconds": 10
     },
     "server": {
-        "host_name": "https://bargerdatavisualizer.azurewebsites.net",
+        "COMMENT_host_name": "https://bargerdatavisualizer.azurewebsites.net",
+        "host_name": "http://localhost:55878",
         "update_url": "/DataSource/SaveRecord",
         "log_error_url": "/DataSource/LogError",
-        "login_url": "/Account/LogIn"
+        "login_url": "/Account/LogIn",
+        "data_source_id": "temperature_tracker",
+        "data_source_visualization_id": 1
     }
 }

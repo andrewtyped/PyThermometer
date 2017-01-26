@@ -2,24 +2,25 @@ import requests
 import json
 from pprint import pprint
 
-url = 'http://localhost:55878/DataSource/SaveRecord'
+def save_record(server_config, temperature_reading):
+    properties = {
+        "temperature": temperature_reading['temperature'],
+        "reading_time": temperature_reading['reading_time']
+    }
 
-Properties = {
-    "label": "foo",
-    "data": "baz"
-}
+    data = {
+        "DataSourceId": server_config['data_source_id'],
+        "DataSourceVisualizationId": server_config['data_source_visualization_id'],
+        "Properties": properties
+    }
 
-data = {
-    "DataSourceId": "temperature_tracker",
-    "DataSourceVisualizationId": "1",
-    "Properties": Properties
-}
+    headers = {'Content-Type':'application/json; charset=utf-8'}
 
-headers = {'Content-Type':'application/json; charset=utf-8'}
+    json_obj = json.dumps(data, sort_keys=False, indent=2)
 
-json_obj = json.dumps(data, sort_keys=False, indent=2)
-print(json_obj)
-r = requests.post(url,headers = headers, data=json_obj)
+    url = server_config['host_name'] + server_config['update_url']
 
-foo = r.content
-pprint(r)
+    r = requests.post(url,headers = headers, data=json_obj)
+
+    content = r.content
+    pprint(content)

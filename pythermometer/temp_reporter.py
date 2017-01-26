@@ -5,6 +5,7 @@ import json
 import requests
 from pprint import pprint
 from result import Result
+from temp_post import save_record
 
 def initialize():
     here = path.abspath(path.dirname(__file__))
@@ -26,7 +27,7 @@ def celsius_to_fahrenheit(temperature):
     
     return temperature * 1.8 + 32
 
-def get_temperature_data(fileName):
+def get_temperature_reading(fileName):
     '''Gets a successful temperature reading or records a failure
 
     Args:
@@ -58,11 +59,17 @@ def get_temperature_data(fileName):
 
     temperatureFahrenheit = celsius_to_fahrenheit(temperatureCelsius)
 
-    return Result.Success(temperatureFahrenheit)
+    reading = {'temperature' : temperatureFahrenheit, 'reading_time': 'mock'}
+
+    return Result.Success(reading)
 
 def report_temperature_loop(config):
-    tempResult = get_temperature_data(config['client']['temperature_file'])
-    pprint(tempResult.value())
+    temperatureReadingResult = get_temperature_reading(config['client']['temperature_file'])
+
+    if (temperatureReadingResult.success()):
+        save_record(config['server'], temperatureReadingResult.value())
+
+    pprint(temperatureReadingResult.value())
     Timer(config['client']['read_interval_seconds'], report_temperature_loop, [config]).start()
 
 
