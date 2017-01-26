@@ -1,0 +1,15 @@
+{
+    "client": {
+        "thermometer_model": "D218B20",
+        "thermometer_serial": "28-000008a10cec",
+        "temperature_file": "E:/programming/python/pythermometer/DS18B20TempReading",
+        "COMMENT_temperature_file": "/sys/devices/w1_bus_master1/28-000008a10cec/w1_slave",
+        "read_interval_seconds": 10
+    },
+    "server": {
+        "host_name": "https://bargerdatavisualizer.azurewebsites.net",
+        "update_url": "/DataSource/SaveRecord",
+        "log_error_url": "/DataSource/LogError",
+        "login_url": "/Account/LogIn"
+    }
+}
